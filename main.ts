@@ -27,9 +27,6 @@ enum PenState {
     UP
 }
 
-let penState = PenState.UP;
-DFRobotMaqueenPlus.servoRun(Servos.S3, 20);
-
 const setPenState = (state: PenState) => {
     if (state == penState)
         return;
@@ -61,10 +58,8 @@ const draw = (shape: Shape) => {
     DFRobotMaqueenPlus.mototStop(Motors.ALL);
 }
 
-try {
-    DFRobotMaqueenPlus.I2CInit();
-} catch {
-    basic.showString("Please insert into Maqueen Plus.")
-}
+let penState = PenState.UP;
+DFRobotMaqueenPlus.I2CInit();
+DFRobotMaqueenPlus.servoRun(Servos.S3, 20);
 
 draw(Shape.SQUARE);
