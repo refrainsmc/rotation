@@ -47,8 +47,6 @@ const draw = (shape: Shape) => {
             setPenState(PenState.DOWN);
             DFRobotMaqueenPlus.mototRun(Motors.M1, Dir.CW, 200);
             basic.pause(1850);
-            DFRobotMaqueenPlus.mototStop(Motors.ALL);
-            setPenState(PenState.UP);
             break;
         case Shape.SQUARE:
             for (let i = 0; i < 4; i++) {
@@ -58,8 +56,8 @@ const draw = (shape: Shape) => {
                 turnRight();
                 basic.pause(1000);
             }
-            setPenState(PenState.UP);
     }
+    setPenState(PenState.UP);
     DFRobotMaqueenPlus.mototStop(Motors.ALL);
 }
 
