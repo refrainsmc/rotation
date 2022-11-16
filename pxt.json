@@ -5,12 +5,12 @@
         "core": "*",
         "radio": "*",
         "microphone": "*",
-        "MaqueenPlus": "github:dfrobot/pxt-dfrobot-maqueenplus#v1.5.0",
-        "servo": "*"
+        "MaqueenPlus": "github:dfrobot/pxt-dfrobot-maqueenplus#v1.5.0"
     },
     "files": [
         "main.ts",
-        "README.md"
+        "README.md",
+        "MaqueenWrapper.ts"
     ],
     "testFiles": [
         "test.ts"

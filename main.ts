@@ -1,65 +1,34 @@
-enum Shape {
-    CIRCLE,
-    SQUARE
-}
+init();
+basic.showIcon(IconNames.Happy);
+DFRobotMaqueenPlus.setRGBLight(RGBLight.RGBA, Color.YELLOW);
 
-const pauseBot = (time: number) => {
-    DFRobotMaqueenPlus.mototStop(Motors.ALL);
-    basic.pause(1000);
-}
-
-const turnRight = () => {
-    setPenState(PenState.DOWN);
-    // main turn
-    DFRobotMaqueenPlus.mototRun(Motors.M1, Dir.CW, 200);
-    DFRobotMaqueenPlus.mototRun(Motors.M2, Dir.CCW, 200);
-    basic.pause(160);
-    pauseBot(1000);
-    setPenState(PenState.UP);
-    // go back a few mm
-    DFRobotMaqueenPlus.mototRun(Motors.ALL, Dir.CCW, 200);
-    basic.pause(160);
-    DFRobotMaqueenPlus.mototStop(Motors.ALL);
-}
-
-enum PenState {
-    DOWN,
-    UP
-}
-
-const setPenState = (state: PenState) => {
-    if (state == penState)
-        return;
-    penState = state;
-    if (state == PenState.DOWN) {
-        DFRobotMaqueenPlus.servoRun(Servos.S3, 80);
-    } else {
-        DFRobotMaqueenPlus.servoRun(Servos.S3, 20);
-    }
-}
-
-const draw = (shape: Shape) => {
-    switch (shape) {
-        case Shape.CIRCLE:
-            setPenState(PenState.DOWN);
-            DFRobotMaqueenPlus.mototRun(Motors.M1, Dir.CW, 200);
-            basic.pause(1850);
+IR.IR_callbackUser((message) => {
+    switch (message) {
+        case 16: // button 1
+            draw(Shape.SQUARE);
             break;
-        case Shape.SQUARE:
-            for (let i = 0; i < 4; i++) {
-                setPenState(PenState.DOWN);
-                DFRobotMaqueenPlus.mototRun(Motors.ALL, Dir.CW, 200);
-                basic.pause(600);
-                turnRight();
-                basic.pause(1000);
-            }
+        case 17: // button 2
+            draw(Shape.CIRCLE);
+            break;
+        case 18: // button 3
+            basic.showNumber(1);
+            turn(Direct.RIGHT, 200, 120);
+            basic.pause(1000);
+            basic.showNumber(2);
+            turn(Direct.RIGHT, 200, 140);
+            basic.pause(1000);
+            basic.showNumber(3);
+            turn(Direct.RIGHT, 200, 160);
+            basic.pause(1000);
+            basic.showNumber(4);
+            turn(Direct.RIGHT, 200, 180);
+            basic.pause(1000);
+            basic.showString("DONE");
+        case 8: // down arrow
+            setPenState(PenState.DOWN);
+            break;
+        case 10: // up arrow
+            setPenState(PenState.UP);
+            break;
     }
-    setPenState(PenState.UP);
-    DFRobotMaqueenPlus.mototStop(Motors.ALL);
-}
-
-let penState = PenState.UP;
-DFRobotMaqueenPlus.I2CInit();
-DFRobotMaqueenPlus.servoRun(Servos.S3, 20);
-
-draw(Shape.SQUARE);
+});
